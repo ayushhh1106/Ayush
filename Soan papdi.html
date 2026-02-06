@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+    #typing{
+white-space:pre-line;
+font-size:6px;
+line-height:1.2;
+max-width:520px;
+color:#000000;
+
+
+}
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* 🔥 Animated Background */
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+
+background:linear-gradient(-45deg,#ff4d6d,#ff758f,#ff7eb3,#ffc2d1);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* PARTICLES */
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+@keyframes floatUp{
+from{
+transform:translateY(100vh);
+}
+to{
+transform:translateY(-10vh);
+opacity:0;
+}
+}
+
+/* LOVE LETTER */
+
+#letter{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:white;
+text-align:center;
+z-index:10;
+}
+
+.open-btn{
+padding:16px 32px;
+border:none;
+border-radius:40px;
+background:white;
+color:#ff4d6d;
+font-size:20px;
+cursor:pointer;
+transition:.3s;
+}
+
+.open-btn:hover{
+transform:scale(1.1);
+}
+
+/* 💎 GLASS CARD */
+
+#main{
+display:none;
+flex-direction:column;
+align-items:center;
+text-align:center;
+color:rgb(0, 0, 0);
+
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:30px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,.3);
+box-shadow:0 8px 32px rgba(0,0,0,.25);
+position:relative;
+}
+
+/* PHOTO */
+
+.photo{
+width:90vw;
+max-width:460px;
+height:260px;
+
+border-radius:18px;
+border:4px solid white;
+object-fit:cover;
+margin-bottom:20px;
+
+opacity:1;
+transition:opacity .8s;
+}
+
+.photo.fade{
+opacity:0;
+}
+
+/* TEXT */
+
+#typing{
+font-size:28px;
+font-weight:600;
+min-height:40px;
+}
+
+.rose{
+font-size:70px;
+animation:bloom 2s infinite alternate;
+}
+
+@keyframes bloom{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
+}
+
+/* BUTTONS */
+
+.btn{
+margin-top:15px;
+padding:12px 26px;
+font-size:18px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+margin:10px;
+}
+
+.yes{
+background:white;
+color:#ff4d6d;
+}
+
+.no{
+background:#ff4d6d;
+color:white;
+position:absolute;
+}
+
+/* HEARTS */
+
+.heart{
+position:absolute;
+font-size:24px;
+animation:float 4s linear forwards;
+}
+
+@keyframes float{
+to{
+transform:translateY(-800px);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+<canvas id="particles"></canvas>
+
+<!-- LOVE LETTER -->
+<div id="letter">
+<h1>I Made Something Special For You ❤️</h1>
+<br>
+<button class="open-btn" onclick="openLetter()">Open Love Letter 💌</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+<img id="slider" src="WhatsApp Image 2026-02-06 at 14.37.05.jpeg" class="photo">
+
+
+<h2>in this entire universe, you are the most special person to me 😘</h2>
+<h2>i loveeeeeeeeeeee youuuuuuuuuu meriiiiiiiii soannnnnn papdiiiiiii</h2>
+
+<div class="rose">🌹</div>
+
+<div id="typing"></div>
+
+<div>
+<button class="btn yes" onclick="love()">YES 💍</button>
+<button class="btn no" onmouseover="runAway(this)">NO 😜</button>
+</div>
+
+</div>
+
+<audio autoplay loop>
+<source src="your-song.mp3">
+</audio>
+
+<script>
+
+/* PARTICLES */
+
+/* 🔥 BIG + GLOW PARTICLES */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+/* Create particles */
+
+for(let i=0;i<120;i++){
+particlesArray.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*0.6,
+vy:(Math.random()-0.5)*0.6,
+
+// ⭐ BIG SIZE
+size:Math.random()*5+2   // particles will be 3px → 9px
+});
+}
+
+/* Animate */
+
+function animateParticles(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particlesArray.forEach(p=>{
+
+p.x+=p.vx;
+p.y+=p.vy;
+
+if(p.x<0 || p.x>canvas.width) p.vx*=-1;
+if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+
+/* ⭐ GLOW EFFECT */
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+
+ctx.fillStyle="rgba(255,255,255,0.9)";
+
+ctx.shadowBlur = 15;      // glow strength
+ctx.shadowColor = "white";
+
+ctx.fill();
+
+});
+
+requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+/* Responsive */
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+
+
+
+/* OPEN LETTER */
+
+function openLetter(){
+letter.style.display="none";
+main.style.display="flex";
+typeText();
+}
+
+/* TYPING */
+
+const text = "On this beautiful and romantic Rose Day, I want to gift a rose to the most special person in my life Supriya 🌹. This rose is not just a flower, but a symbol of the deep love, respect, and care I hold in my heart for you. Just like a rose spreads its fragrance wherever it blooms, you have filled my life with happiness, positivity, and endless love. \n\nSupriya, people say sweetness can be tasted, but I feel it every day because of you. That is why I lovingly call you my Soan Papdi — soft, sweet, and impossible to forget. From the moment you came into my life, everything started feeling more beautiful. Your smile brightens my darkest days, your voice feels like calm music to my restless heart, and your presence makes every ordinary moment extraordinary. \n\nI may not always express my feelings perfectly, but today I want you to know that you mean more to me than words can describe. You are not just someone I love — you are my comfort, my best friend, my biggest support, and the reason I look forward to tomorrow with excitement. \n\nOn this Rose Day, I promise to stand by your side in every phase of life — to celebrate your happiness, hold your hand in difficult times, and love you a little more with each passing day. No matter where life takes us, my heart will always choose you. \n\nHappy Rose Day, Supriya ❤️ Forever yours — Your Soan Papdi Lover 🌹";
+
+let i=0;
+
+function typeText(){
+if(i<text.length){
+typing.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeText,80);
+}
+}
+
+/* HEART BLAST */
+
+function love(){
+
+for(let i=0;i<40;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.bottom="0";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),4000);
+}
+
+alert("You made me the happiest person ❤️");
+}
+
+/* RUNAWAY BUTTON (keeps inside card) */
+
+function runAway(btn){
+
+btn.style.top=Math.random()*200+"px";
+btn.style.left=Math.random()*200+"px";
+
+}
+
+/* PHOTO SLIDER */
+
+const photos=[
+"43E166F5-52D1-4570-AEF2-024038B79E51_1_201_a.jpeg",
+"781CE9EA-8795-456A-8B5C-1BCDF53BFBB4_1_201_a.jpeg",
+"E5CE3CE0-9896-45DA-87A2-D04C1C833208_1_201_a.jpeg",
+"WhatsApp Image 2026-02-06 at 14.37.05.jpeg"
+];
+
+let index=0;
+const slider=document.getElementById("slider");
+
+setInterval(()=>{
+
+slider.classList.add("fade");
+
+setTimeout(()=>{
+index=(index+1)%photos.length;
+slider.src=photos[index];
+slider.classList.remove("fade");
+},800);
+
+},2000);
+
+</script>
+
+</body>
+</html>
